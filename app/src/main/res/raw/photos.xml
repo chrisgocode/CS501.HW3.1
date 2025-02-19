@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<photos>
+    <photo>
+        <title>Silly Honey</title>
+        <file>honey_1.webp</file>
+    </photo>
+    <photo>
+        <title>Creepy Honey</title>
+        <file>honey_2.webp</file>
+    </photo>
+    <photo>
+        <title>Curious Honey</title>
+        <file>honey_3.webp</file>
+    </photo>
+    <photo>
+        <title>Honey can sit</title>
+        <file>honey_4.webp</file>
+    </photo>
+    <photo>
+        <title>Smiling Honey</title>
+        <file>honey_5.webp</file>
+    </photo>
+    <photo>
+        <title>Cozy Honey</title>
+        <file>honey_6.webp</file>
+    </photo>
+</photos>
