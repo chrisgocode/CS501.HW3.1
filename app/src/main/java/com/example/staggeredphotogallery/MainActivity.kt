@@ -57,25 +57,42 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// Data class for photo information
+data class Photo(val title: String, val file: String)
+
+/**
+ * Displays a gallery of photos in a grid.
+ *
+ * Photos are loaded into a LazyVerticalGrid for efficient display.
+ */
 @Composable
 fun PhotoGallery(photos: List<Photo>, modifier: Modifier = Modifier) {
     LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
+            columns = GridCells.Fixed(2), // Two columns in the grid
             modifier =
                     modifier.fillMaxWidth()
                             .padding(top = 32.dp, start = 8.dp, end = 8.dp, bottom = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) { items(photos) { photo -> PhotoCard(photo = photo) } }
+    ) {
+        items(photos) { photo ->
+            PhotoCard(photo = photo) // Display each photo in a card
+        }
+    }
 }
 
+/**
+ * Displays a single photo with an enlarge animation on click.
+ *
+ * Uses a Card to display the image and title, with an animated scale change on click.
+ */
 @Composable
 fun PhotoCard(photo: Photo, modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    var isEnlarged by remember { mutableStateOf(false) }
+    var isEnlarged by remember { mutableStateOf(false) } // Tracks enlargement state
     val scale by
             animateFloatAsState(
-                    targetValue = if (isEnlarged) 1.5f else 1f,
+                    targetValue = if (isEnlarged) 1.5f else 1f, // Scale target based on state
                     animationSpec =
                             spring(
                                     dampingRatio = Spring.DampingRatioMediumBouncy,
@@ -94,6 +111,7 @@ fun PhotoCard(photo: Photo, modifier: Modifier = Modifier) {
             }
 
     Card(
+            // Toggles enlargement on click
             modifier = modifier.clickable { isEnlarged = !isEnlarged },
             elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
@@ -106,7 +124,7 @@ fun PhotoCard(photo: Photo, modifier: Modifier = Modifier) {
                                 Modifier.fillMaxWidth().aspectRatio(1f).graphicsLayer {
                                     scaleX = scale
                                     scaleY = scale
-                                },
+                                }, // Applies scale animation
                         contentScale = ContentScale.Crop
                 )
             } else {
@@ -122,6 +140,11 @@ fun PhotoCard(photo: Photo, modifier: Modifier = Modifier) {
     }
 }
 
+/**
+ * Parses an XML file to extract photo data.
+ *
+ * Reads an XML file from resources and extracts the title and file name for each photo.
+ */
 fun parseXML(context: Context): List<Photo> {
     val photos = mutableListOf<Photo>()
     var inputStream: InputStream? = null
@@ -167,5 +190,3 @@ fun parseXML(context: Context): List<Photo> {
 
     return photos
 }
-
-data class Photo(val title: String, val file: String)
